@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: recharge-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: recharge-service
+  template:
+    metadata:
+      labels:
+        app: recharge-service
+    spec:
+      containers:
+        - name: recharge-service
+          image: recharge-service:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 5002
+          volumeMounts:
+            - name: sqlite-storage
+              mountPath: /app/db
+      volumes:
+        - name: sqlite-storage
+          emptyDir: {}
+
